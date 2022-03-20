@@ -17,3 +17,5 @@ Backlog:
 - more stuff instead of just (color or direction)
 - sharing
 - mute option
+- pausing
+- animation when you get a hiscore
