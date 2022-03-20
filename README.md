@@ -11,3 +11,4 @@ Backlog:
 - different game mechanics, i.e. different changing colored arrows
 - more stuff instead of just (color or direction)
 - sharing
+- mute option
