@@ -182,8 +182,8 @@ function onIncorrectAnswer() {
 }
 
 function onCorrectAnswer() {
-    if (currentTimeAmount > 100) {
-        currentTimeAmount -= 10;
+    if (currentTimeAmount > 120) {
+        currentTimeAmount -= 8;
     }
     score += 1;
     scoreText.content = 'Score: ' + score.toString(),
