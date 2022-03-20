@@ -9,14 +9,13 @@ var endMusic = new Howl({
     volume: 0.5,
 });
 
-
 // Draw the arrow keys
 var canvas = document.getElementById('myCanvas');
 
 var canvasWidth = canvas.width;
 var canvasHeight = canvas.height;
 
-var upPress = new Path.RegularPolygon(new Point(canvasWidth/2, canvasHeight-450), 3, 50)
+var upPress = new Path.RegularPolygon(new Point(canvasWidth/2 + 50 , canvasHeight-450), 3, 50)
 upPress.strokeWidth = 5;
 
 upPress.opacity = 1;
@@ -25,7 +24,7 @@ upPress.onMouseDown = function(event) {
     handleKeyDown('up');
 }
 
-var downPress = new Path.RegularPolygon(new Point(canvasWidth/2, canvasHeight-150), 3, 50)
+var downPress = new Path.RegularPolygon(new Point(canvasWidth/2+ 50, canvasHeight-150), 3, 50)
 downPress.strokeWidth = 5;
 
 downPress.opacity = 1;
@@ -35,7 +34,7 @@ downPress.onMouseDown = function(event) {
     handleKeyDown('down');
 }
 
-var leftPress= new Path.RegularPolygon(new Point(canvasWidth/2-200, canvasHeight-300), 3, 50)
+var leftPress= new Path.RegularPolygon(new Point(canvasWidth/2 - 150, canvasHeight-300), 3, 50)
 leftPress.strokeWidth = 5;
 
 leftPress.opacity = 1; 
@@ -45,7 +44,7 @@ leftPress.onMouseDown = function(event) {
     handleKeyDown('left');
 }
 
-var rightPress= new Path.RegularPolygon(new Point(canvasWidth/2+200, canvasHeight-300), 3, 50)
+var rightPress= new Path.RegularPolygon(new Point(canvasWidth/2 + 250, canvasHeight-300), 3, 50)
 rightPress.strokeWidth = 5;
 
 rightPress.opacity = 1;
@@ -67,8 +66,13 @@ if (persistedHighScoreAllTime) {
     highScore = persistedHighScoreAllTime;
 }
 
+var progressBar = new Shape.Rectangle(new Point(50, 50), [canvasWidth, 50]);
+progressBar.fillColor = 'white';
+
 // Global variables
 var score = 0;
+var scoreCanHaveOr = 10;
+var scoreCanHaveNothing = 7;
 var initialTimeAmount = 500;
 var currentTimeAmount = initialTimeAmount;
 var gameOver = false;
@@ -84,7 +88,7 @@ var directions = ['up', 'down', 'left', 'right'];
 
 // Text that depends on game variables
 var timerText = new PointText({
-	point: [1500, 900],
+	point: [canvasWidth/2 + 30, canvasHeight-300],
 	fillColor:'white',
 	content: timer.toString(),
 	fontSize: 25,
@@ -92,7 +96,7 @@ var timerText = new PointText({
 })
 
 var scoreText = new PointText({
-	point: [100, 900],
+    point: [100, canvasHeight],
 	fillColor:'white',
 	content: 'Score: ' + score.toString(),
 	fontSize: 50,
@@ -100,10 +104,10 @@ var scoreText = new PointText({
 });
 
 var highScoreText = new PointText({
-	point: [100, 100],
+	point: [canvasWidth-200, canvasHeight],
 	fillColor: 'white',
 	content: 'Highscore: ' + highScore.toString(),
-	fontSize: 25,
+	fontSize: 50,
 	opacity: 1,
 });
 
@@ -113,7 +117,9 @@ generateWords();
 function onFrame(){
     timer -= 1;
     timerText.content = timer.toString();
-
+    progressBar.size = [(canvasWidth) * (timer/currentTimeAmount), 50]
+    progressBar.opacity = (timer/currentTimeAmount);
+    console.log(progressBar.opacity);
     if (timer === 0) {
         if (correctAnswers.length === 0) {
             onCorrectAnswer();
@@ -169,30 +175,30 @@ function onIncorrectAnswer() {
 }
 
 function onCorrectAnswer() {
-    if (currentTimeAmount > 120) {
+    if (currentTimeAmount > 150) {
         currentTimeAmount -= 10;
     }
     score += 1;
     scoreText.content = 'Score: ' + score.toString(),
     correctMusic.play();
     clearWords();
-    generateWords(score > 20);
+    generateWords(score > scoreCanHaveOr, score > scoreCanHaveNothing);
     resetTimer();
 }
 
-function generateWords(canHaveOr) {
+function generateWords(canHaveOr, canHaveNothing) {
     // Generates either "not" or "" + a random color/direction
     var useNot = generateRandomBooleanWithProbability(0.35);
     var useAnotherNot = generateRandomBooleanWithProbability(0.35);
     var useColor = generateRandomBooleanWithProbability(0.5);
-    var useNothing = generateRandomBooleanWithProbability(0.1);
+    var useNothing = generateRandomBooleanWithProbability(canHaveNothing ? 0.1 : 0);
     var useOr = generateRandomBooleanWithProbability(canHaveOr ? 0.3 : 0);
 
     if (useNot) {
         // Draw the not
         notText = new PointText({
             fillColor: 'white',
-            point:[440, 350],
+            point:[canvasWidth/2 - 350, canvasHeight/2 - 150],
             opacity: 1, 
             content: 'NOT',
             fontSize: 75
@@ -202,7 +208,7 @@ function generateWords(canHaveOr) {
         // Draw the not
         anotherNotText = new PointText({
             fillColor: 'white',
-            point:[640, 350],
+            point:[canvasWidth/2 - 150, canvasHeight/2 - 150],
             opacity: 1,
             content: 'NOT',
             fontSize: 75
@@ -215,7 +221,7 @@ function generateWords(canHaveOr) {
     if (useNothing) {
         nothingText = new PointText({
             fillColor: 'white',
-            point:[840, 350],
+            point:[canvasWidth/2 + 50, canvasHeight/2 - 150],
             opacity: 1,
             content: 'NOTHING',
             fontSize: 75
@@ -229,7 +235,7 @@ function generateWords(canHaveOr) {
         directionOrColor = getRandomElementFromArray(colors)
         colorText = new PointText({
             fillColor: 'white',
-            point:[1040, 350],
+            point:[canvasWidth/2 + 150, canvasHeight/2 - 150],
             opacity: 1,
             content: directionOrColor.toUpperCase(),
             fontSize: 75
@@ -238,7 +244,7 @@ function generateWords(canHaveOr) {
         directionOrColor = getRandomElementFromArray(directions)
         directionsText = new PointText({
             fillColor: 'white',
-            point:[1040, 350],
+            point:[canvasWidth/2 + 150, canvasHeight/2 - 150],
             opacity: 1,
             content: directionOrColor.toUpperCase(),
             fontSize: 75
