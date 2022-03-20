@@ -72,7 +72,7 @@ if (persistedHighScoreAllTime) {
     highScore = persistedHighScoreAllTime;
 }
 
-var progressBar = new Shape.Rectangle(new Point(0, 50), [border.size.width + 50, 50]);
+var progressBar = new Shape.Rectangle(new Point(0, 50), [paper.view.size.width, 50]);
 progressBar.fillColor = 'white';
 
 // Configuration/variables 
@@ -242,11 +242,7 @@ function generateWords(canHaveOr, canHaveNothing) {
     var secondDirectionOrColor;
     if (useOr) {
         var secondDirectionOrColor = getRandomDirectionOrColorExcludingDirectionOrColor(directionOrColor);
-        if (useColor) {
-            combinedAnswerText += '(' + directionOrColor.toUpperCase() + ' OR '+  secondDirectionOrColor.toUpperCase() + ')';
-        } else {
-            combinedAnswerText.content += '(' +  directionOrColor.toUpperCase() + ' OR ' +  secondDirectionOrColor.toUpperCase() + ')';
-        }
+        combinedAnswerText += '(' + directionOrColor.toUpperCase() + ' OR '+  secondDirectionOrColor.toUpperCase() + ')';
     } else {
         combinedAnswerText += directionOrColor;
     }
