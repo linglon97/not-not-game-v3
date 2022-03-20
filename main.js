@@ -124,7 +124,7 @@ function onFrame(event){
     // So I want the timer to roughly be calibrated so the timer goes down faster,
     // So the time is takes is roughly the same. 
     timer -= timeMultipler;
-    timerText.content = (timer).toString().substring(0,3),
+    timerText.content = (Math.floor(timer)).toString(),
     progressBar.size = [(canvasWidth) * (timer/currentTimeAmount), 50]
     progressBar.opacity = (timer/currentTimeAmount);
     if (timer <= 0) {
