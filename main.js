@@ -15,7 +15,7 @@ var canvas = document.getElementById('myCanvas');
 var canvasWidth = canvas.width;
 var canvasHeight = canvas.height;
 
-var upPress = new Path.RegularPolygon(new Point(canvasWidth/2  , canvasHeight-450), 3, 50)
+var upPress = new Path.RegularPolygon(new Point(canvasWidth/2, canvasHeight-450), 3, 50)
 upPress.strokeWidth = 5;
 
 upPress.opacity = 1;
@@ -88,7 +88,7 @@ var directions = ['up', 'down', 'left', 'right'];
 
 // Text that depends on game variables
 var timerText = new PointText({
-	point: [canvasWidth/2 + 30, canvasHeight-300],
+	point: [canvasWidth/2, canvasHeight-300],
 	fillColor:'white',
 	content: timer.toString(),
 	fontSize: 25,
@@ -198,7 +198,7 @@ function generateWords(canHaveOr, canHaveNothing) {
         // Draw the not
         notText = new PointText({
             fillColor: 'white',
-            point:[canvasWidth/2 - 450, canvasHeight/2 - 150],
+            point:[canvasWidth/2 - 425, canvasHeight/2 - 150],
             opacity: 1, 
             content: 'NOT',
             fontSize: 75
@@ -208,7 +208,7 @@ function generateWords(canHaveOr, canHaveNothing) {
         // Draw the not
         anotherNotText = new PointText({
             fillColor: 'white',
-            point:[canvasWidth/2 - 250, canvasHeight/2 - 150],
+            point:[canvasWidth/2 - 225, canvasHeight/2 - 150],
             opacity: 1,
             content: 'NOT',
             fontSize: 75
@@ -221,7 +221,7 @@ function generateWords(canHaveOr, canHaveNothing) {
     if (useNothing) {
         nothingText = new PointText({
             fillColor: 'white',
-            point:[canvasWidth/2 - 50, canvasHeight/2 - 150],
+            point:[canvasWidth/2 - 25, canvasHeight/2 - 150],
             opacity: 1,
             content: 'NOTHING',
             fontSize: 75
@@ -235,7 +235,7 @@ function generateWords(canHaveOr, canHaveNothing) {
         directionOrColor = getRandomElementFromArray(colors)
         colorText = new PointText({
             fillColor: 'white',
-            point:[canvasWidth/2 + 50, canvasHeight/2 - 150],
+            point:[canvasWidth/2 + 75, canvasHeight/2 - 150],
             opacity: 1,
             content: directionOrColor.toUpperCase(),
             fontSize: 75
@@ -244,7 +244,7 @@ function generateWords(canHaveOr, canHaveNothing) {
         directionOrColor = getRandomElementFromArray(directions)
         directionsText = new PointText({
             fillColor: 'white',
-            point:[canvasWidth/2 + 50, canvasHeight/2 - 150],
+            point:[canvasWidth/2 + 75, canvasHeight/2 - 150],
             opacity: 1,
             content: directionOrColor.toUpperCase(),
             fontSize: 75
