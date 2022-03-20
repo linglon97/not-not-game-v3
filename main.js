@@ -23,7 +23,7 @@ border.strokeWidth = '3';
 var centerX = border.size.width/2;
 var centerY = border.size.height/2;
 
-var upPress = new Path.RegularPolygon(new Point(paper.view.center.x, border.size.height-350), 3, 50)
+var upPress = new Path.RegularPolygon(new Point(paper.view.center.x, border.size.height-350), 3, 65)
 upPress.strokeWidth = 5;
 
 upPress.opacity = 1;
@@ -32,7 +32,7 @@ upPress.onMouseDown = function(event) {
     handleKeyDown('up');
 }
 
-var downPress = new Path.RegularPolygon(new Point(paper.view.center.x, border.size.height-100), 3, 50)
+var downPress = new Path.RegularPolygon(new Point(paper.view.center.x, border.size.height-100), 3, 65)
 downPress.strokeWidth = 5;
 
 downPress.opacity = 1;
@@ -42,7 +42,7 @@ downPress.onMouseDown = function(event) {
     handleKeyDown('down');
 }
 
-var leftPress= new Path.RegularPolygon(new Point(paper.view.center.x - 200, border.size.height-225), 3, 50)
+var leftPress= new Path.RegularPolygon(new Point(paper.view.center.x - 200, border.size.height-225), 3, 65)
 leftPress.strokeWidth = 5;
 
 leftPress.opacity = 1; 
@@ -52,7 +52,7 @@ leftPress.onMouseDown = function(event) {
     handleKeyDown('left');
 }
 
-var rightPress= new Path.RegularPolygon(new Point(paper.view.center.x + 200, border.size.height-225), 3, 50)
+var rightPress= new Path.RegularPolygon(new Point(paper.view.center.x + 200, border.size.height-225), 3, 65)
 rightPress.strokeWidth = 5;
 
 rightPress.opacity = 1;
@@ -61,8 +61,6 @@ rightPress.fillColor = 'yellow';
 rightPress.onMouseDown = function(event) {
     handleKeyDown('right');
 }
-
-
 
 var localStorage = window.localStorage;
 var persistedHighScoreAllTime = localStorage.getItem('highScore');
@@ -76,10 +74,13 @@ var progressBar = new Shape.Rectangle(new Point(0, 50), [paper.view.size.width, 
 progressBar.fillColor = 'white';
 
 // Configuration/variables 
-var scoreCanHaveOr = 10;
-var scoreCanHaveNothing = 7;
+var scoreCanHaveOr = 30;
+var scoreCanHaveNothing = 20;
+var scoreCanHaveMultipleNots = 10;
+var scoreCanHaveColors = 6;
+
 var initialTimeAmount = 450;
-var answerFontSize = 75;
+var answerFontSize = 70;
 var smallAnswerFontSize = 75/1.5;
 
 // Global variables for game state, objects, etc.
@@ -94,13 +95,6 @@ var colors = ['red', 'green', 'blue', 'yellow'];
 var directions = ['up', 'down', 'left', 'right'];
 
 // Text that depends on game variables
-// var timerText = new PointText({
-// 	point: [canvasWidth/2 - 20, canvasHeight-300],
-// 	fillColor:'white',
-// 	content: (timer).toString().substring(0,3),
-// 	fontSize: 12,
-//     fontFamily: 'Roboto mono',
-// })
 
 var scoreText = new PointText({
     point: [border.bounds.bottomLeft.x + 50, border.bounds.bottomLeft.y - 50],
@@ -127,15 +121,10 @@ function onFrame(event){
     // Time in seconds since last frame render
     var delta = event.delta;
     var timeMultipler = delta/standardDelta;
-    // If i'm 200 fps then timer goes down every 1/200s.
-    // If i'm 60 fps then timer goes down every 1/60s. 
-    // So I want the timer to roughly be calibrated so the timer goes down faster,
-    // So the time is takes is roughly the same. 
+    // We want the initial timer to be around ~2s, so based on time between the last frame render,
+    // that's how we approximate the timer going down. 
     timer -= timeMultipler;
-    // timerText.content = (Math.floor(timer)).toString(),
-    console.log((timer/currentTimeAmount));
     progressBar.size = [(canvasWidth) * (timer/currentTimeAmount), 50]
-    // progressBar.opacity = (timer/currentTimeAmount);
     if (timer <= 0) {
         if (correctAnswers.length === 0) {
             onCorrectAnswer();
@@ -196,25 +185,33 @@ function onIncorrectAnswer() {
 
 function onCorrectAnswer() {
     if (currentTimeAmount > 120) {
-        currentTimeAmount -= 5;
+        currentTimeAmount -= 4;
     }
     score += 1;
     scoreText.content = 'Score: ' + score.toString(),
     correctMusic.play();
     clearWords();
-    generateWords(score > scoreCanHaveOr, score > scoreCanHaveNothing);
+    generateWords();
     resetTimer();
 }
 
-function generateWords(canHaveOr, canHaveNothing) {
-    // Generates either "not" or "" + a random color/direction
+function generateWords() {
+    var canHaveNothing = score > scoreCanHaveNothing;
+    var canHaveColors = score > scoreCanHaveColors;
+    var canHaveOr = score > scoreCanHaveOr;
+    var canHaveMultipleNots = score > scoreCanHaveMultipleNots;
+
+    // Generates the words that determine which keys can be pressed. 
+    // TODO(ling): refactor these values into config files or something. 
     var useNot = generateRandomBooleanWithProbability(0.35);
-    var useAnotherNot = generateRandomBooleanWithProbability(0.35);
-    var useColor = generateRandomBooleanWithProbability(0.5);
-    var useNothing = generateRandomBooleanWithProbability(canHaveNothing ? 0.1 : 0);
+    var useAnotherNot = generateRandomBooleanWithProbability(canHaveMultipleNots ? 0.35 : 0);
+    var useColor = generateRandomBooleanWithProbability(canHaveColors ? 0.5 : 0);
+    var useNothing = generateRandomBooleanWithProbability(canHaveNothing ? 0.09 : 0);
     var useOr = generateRandomBooleanWithProbability(canHaveOr ? 0.3 : 0);
+    var useAnything = generateRandomBooleanWithProbability(canHaveNothing ? 0.06 : 0);
 
     var combinedAnswerText = "";
+
     if (useNot) {
         combinedAnswerText += "not "
     }
@@ -225,8 +222,17 @@ function generateWords(canHaveOr, canHaveNothing) {
     var notCount = Number(useAnotherNot) + Number(useNot);
     var finalUseNot = notCount % 2 === 1;
 
+    // I guess "anything" takes precedence over nothing here.
+    if (useAnything) {
+        combinedAnswerText += "anything";
+        // TODO(ling): refactor to do this in shared fn. 
+        setAnswerTextEl(combinedAnswerText);
+        correctAnswers = finalUseNot ? [] : directions;
+        return;
+    }
+
     if (useNothing) {
-        combinedAnswerText += "Nothing";
+        combinedAnswerText += "nothing";
         setAnswerTextEl(combinedAnswerText);
         setCorrectAnswers(finalUseNot, useColor, directionOrColor, true, directionOrColor);
         return;
@@ -242,7 +248,7 @@ function generateWords(canHaveOr, canHaveNothing) {
     var secondDirectionOrColor;
     if (useOr) {
         var secondDirectionOrColor = getRandomDirectionOrColorExcludingDirectionOrColor(directionOrColor);
-        combinedAnswerText += '(' + directionOrColor.toUpperCase() + ' OR '+  secondDirectionOrColor.toUpperCase() + ')';
+        combinedAnswerText += '(' + directionOrColor + ' or '+  secondDirectionOrColor + ')';
     } else {
         combinedAnswerText += directionOrColor;
     }
