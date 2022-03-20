@@ -104,7 +104,7 @@ var scoreText = new PointText({
 });
 
 var highScoreText = new PointText({
-	point: [canvasWidth-250, canvasHeight - 100],
+	point: [canvasWidth-300, canvasHeight - 100],
 	fillColor: 'white',
 	content: 'Highscore: ' + highScore.toString(),
 	fontSize: 50,
