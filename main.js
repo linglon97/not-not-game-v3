@@ -92,7 +92,7 @@ var timerText = new PointText({
 	fillColor:'white',
 	content: timer.toString(),
 	fontSize: 25,
-	opacity: 1,
+    fontFamily: 'Roboto mono',
 })
 
 var scoreText = new PointText({
@@ -100,7 +100,7 @@ var scoreText = new PointText({
 	fillColor:'white',
 	content: 'Score: ' + score.toString(),
 	fontSize: 50,
-	opacity: 1,
+    fontFamily: 'Roboto mono',
 });
 
 var highScoreText = new PointText({
@@ -108,7 +108,7 @@ var highScoreText = new PointText({
 	fillColor: 'white',
 	content: 'Highscore: ' + highScore.toString(),
 	fontSize: 50,
-	opacity: 1,
+    fontFamily: 'Roboto mono',
 });
 
 // Start game?
@@ -199,7 +199,7 @@ function generateWords(canHaveOr, canHaveNothing) {
         notText = new PointText({
             fillColor: 'white',
             point:[canvasWidth/2 - 425, canvasHeight/2 - 150],
-            opacity: 1, 
+            fontFamily: 'Roboto mono',
             content: 'NOT',
             fontSize: 75
         });
@@ -209,7 +209,7 @@ function generateWords(canHaveOr, canHaveNothing) {
         anotherNotText = new PointText({
             fillColor: 'white',
             point:[canvasWidth/2 - 225, canvasHeight/2 - 150],
-            opacity: 1,
+            fontFamily: 'Roboto mono',
             content: 'NOT',
             fontSize: 75
         });
@@ -222,7 +222,7 @@ function generateWords(canHaveOr, canHaveNothing) {
         nothingText = new PointText({
             fillColor: 'white',
             point:[canvasWidth/2 - 25, canvasHeight/2 - 150],
-            opacity: 1,
+            fontFamily: 'Roboto mono',
             content: 'NOTHING',
             fontSize: 75
         });
@@ -236,7 +236,7 @@ function generateWords(canHaveOr, canHaveNothing) {
         colorText = new PointText({
             fillColor: 'white',
             point:[canvasWidth/2 + 75, canvasHeight/2 - 150],
-            opacity: 1,
+            fontFamily: 'Roboto mono',
             content: directionOrColor.toUpperCase(),
             fontSize: 75
         });
@@ -245,7 +245,7 @@ function generateWords(canHaveOr, canHaveNothing) {
         directionsText = new PointText({
             fillColor: 'white',
             point:[canvasWidth/2 + 75, canvasHeight/2 - 150],
-            opacity: 1,
+            fontFamily: 'Roboto mono',
             content: directionOrColor.toUpperCase(),
             fontSize: 75
         });
