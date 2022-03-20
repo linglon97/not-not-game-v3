@@ -15,7 +15,7 @@ var canvas = document.getElementById('myCanvas');
 var canvasWidth = canvas.width;
 var canvasHeight = canvas.height;
 
-var upPress = new Path.RegularPolygon(new Point(canvasWidth/2 + 50 , canvasHeight-450), 3, 50)
+var upPress = new Path.RegularPolygon(new Point(canvasWidth/2  , canvasHeight-450), 3, 50)
 upPress.strokeWidth = 5;
 
 upPress.opacity = 1;
@@ -24,7 +24,7 @@ upPress.onMouseDown = function(event) {
     handleKeyDown('up');
 }
 
-var downPress = new Path.RegularPolygon(new Point(canvasWidth/2+ 50, canvasHeight-150), 3, 50)
+var downPress = new Path.RegularPolygon(new Point(canvasWidth/2, canvasHeight-150), 3, 50)
 downPress.strokeWidth = 5;
 
 downPress.opacity = 1;
@@ -34,7 +34,7 @@ downPress.onMouseDown = function(event) {
     handleKeyDown('down');
 }
 
-var leftPress= new Path.RegularPolygon(new Point(canvasWidth/2 - 150, canvasHeight-300), 3, 50)
+var leftPress= new Path.RegularPolygon(new Point(canvasWidth/2 - 200, canvasHeight-300), 3, 50)
 leftPress.strokeWidth = 5;
 
 leftPress.opacity = 1; 
@@ -44,7 +44,7 @@ leftPress.onMouseDown = function(event) {
     handleKeyDown('left');
 }
 
-var rightPress= new Path.RegularPolygon(new Point(canvasWidth/2 + 250, canvasHeight-300), 3, 50)
+var rightPress= new Path.RegularPolygon(new Point(canvasWidth/2 + 200, canvasHeight-300), 3, 50)
 rightPress.strokeWidth = 5;
 
 rightPress.opacity = 1;
@@ -96,7 +96,7 @@ var timerText = new PointText({
 })
 
 var scoreText = new PointText({
-    point: [100, canvasHeight],
+    point: [100, canvasHeight - 100],
 	fillColor:'white',
 	content: 'Score: ' + score.toString(),
 	fontSize: 50,
@@ -104,7 +104,7 @@ var scoreText = new PointText({
 });
 
 var highScoreText = new PointText({
-	point: [canvasWidth-200, canvasHeight],
+	point: [canvasWidth-250, canvasHeight - 100],
 	fillColor: 'white',
 	content: 'Highscore: ' + highScore.toString(),
 	fontSize: 50,
