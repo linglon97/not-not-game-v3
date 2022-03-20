@@ -11,9 +11,12 @@ var endMusic = new Howl({
 
 // Draw the arrow keys
 var canvas = document.getElementById('myCanvas');
-
 var canvasWidth = canvas.width;
 var canvasHeight = canvas.height;
+
+var isSmallScreenWidth = canvasWidth < 600;
+// Make the arrow keys bigger on small screens, i.e. mobile for easier clicking.  
+var keySize = isSmallScreenWidth ? 65 : 50;
 
 // We use the borders bounds to position elements inside.
 var border = new Shape.Rectangle(new Point(Math.floor(20), Math.floor(20)), new Size(view.size.width-40,view.size.height-40));
@@ -23,7 +26,7 @@ border.strokeWidth = '3';
 var centerX = border.size.width/2;
 var centerY = border.size.height/2;
 
-var upPress = new Path.RegularPolygon(new Point(paper.view.center.x, border.size.height-350), 3, 65)
+var upPress = new Path.RegularPolygon(new Point(paper.view.center.x, border.size.height-350), 3, keySize)
 upPress.strokeWidth = 5;
 
 upPress.opacity = 1;
@@ -32,7 +35,7 @@ upPress.onMouseDown = function(event) {
     handleKeyDown('up');
 }
 
-var downPress = new Path.RegularPolygon(new Point(paper.view.center.x, border.size.height-100), 3, 65)
+var downPress = new Path.RegularPolygon(new Point(paper.view.center.x, border.size.height-100), 3, keySize)
 downPress.strokeWidth = 5;
 
 downPress.opacity = 1;
@@ -42,7 +45,7 @@ downPress.onMouseDown = function(event) {
     handleKeyDown('down');
 }
 
-var leftPress= new Path.RegularPolygon(new Point(paper.view.center.x - 200, border.size.height-225), 3, 65)
+var leftPress= new Path.RegularPolygon(new Point(paper.view.center.x - 200, border.size.height-225), 3, keySize)
 leftPress.strokeWidth = 5;
 
 leftPress.opacity = 1; 
@@ -52,7 +55,7 @@ leftPress.onMouseDown = function(event) {
     handleKeyDown('left');
 }
 
-var rightPress= new Path.RegularPolygon(new Point(paper.view.center.x + 200, border.size.height-225), 3, 65)
+var rightPress= new Path.RegularPolygon(new Point(paper.view.center.x + 200, border.size.height-225), 3, keySize)
 rightPress.strokeWidth = 5;
 
 rightPress.opacity = 1;
@@ -70,9 +73,10 @@ if (persistedHighScoreAllTime) {
     highScore = persistedHighScoreAllTime;
 }
 
-var progressBar = new Shape.Rectangle(new Point(0, 50), [paper.view.size.width - 50, 50]);
+var progressBar = new Shape.Rectangle(new Point(50, 50), new Point(paper.view.size.width - 50, 100));
 progressBar.fillColor = 'white';
 
+console.log(progressBar.from);
 // Configuration/variables 
 var scoreCanHaveOr = 30;
 var scoreCanHaveNothing = 20;
@@ -124,7 +128,15 @@ function onFrame(event){
     // We want the initial timer to be around ~2s, so based on time between the last frame render,
     // that's how we approximate the timer going down. 
     timer -= timeMultipler;
-    progressBar.size = [(canvasWidth) * (timer/currentTimeAmount), 50]
+    if (progressBar) {
+        progressBar.remove();
+    }
+    // TODO(ling): don't always re-initialise this... surely there must be a way to set the right bound
+    
+    var initialStartRightBound = paper.view.size.width - 50;
+    // TODO(ling): document this horrendous math...
+    progressBar = new Shape.Rectangle(new Point(50, 50), new Point(initialStartRightBound - (initialStartRightBound - 50)*(1 - timer/currentTimeAmount), 100));
+    progressBar.fillColor = "white";
     if (timer <= 0) {
         if (correctAnswers.length === 0) {
             onCorrectAnswer();
