@@ -183,7 +183,7 @@ function onIncorrectAnswer() {
 
 function onCorrectAnswer() {
     if (currentTimeAmount > 120) {
-        currentTimeAmount -= 8;
+        currentTimeAmount -= 5;
     }
     score += 1;
     scoreText.content = 'Score: ' + score.toString(),
