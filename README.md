@@ -19,3 +19,5 @@ Backlog:
 - mute option
 - pausing
 - animation when you get a hiscore
+- get a domain for the site!
+- resizing of window
