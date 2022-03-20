@@ -88,7 +88,7 @@ var directions = ['up', 'down', 'left', 'right'];
 
 // Text that depends on game variables
 var timerText = new PointText({
-	point: [canvasWidth/2, canvasHeight-300],
+	point: [canvasWidth/2 - 25, canvasHeight-300],
 	fillColor:'white',
 	content: timer.toString(),
 	fontSize: 25,
