@@ -8,7 +8,11 @@ Backlog:
 - centering/combining of text in center of screen
 - menu screens/game over
 - difficulty levels
-- different game mechanics, i.e. different changing colored arrows
+- different game mechanics
+  - arrows changing color
+  - more nots
+  - arrows at the same time (and)
+  - maybe not just arrows/colors, add shape as well? i.e. instead of arrows
 - more stuff instead of just (color or direction)
 - sharing
 - mute option
