@@ -90,7 +90,7 @@ var directions = ['up', 'down', 'left', 'right'];
 var timerText = new PointText({
 	point: [canvasWidth/2 - 20, canvasHeight-300],
 	fillColor:'white',
-	content: timer.toString(),
+	content: (timer).toString().substring(0,3),
 	fontSize: 25,
     fontFamily: 'Roboto mono',
 })
@@ -114,13 +114,20 @@ var highScoreText = new PointText({
 // Start game?
 generateWords();
 
-function onFrame(){
-    timer -= 1;
-    timerText.content = timer.toString();
+function onFrame(event){
+    var standardDelta = 1/200;
+    // Time in seconds since last frame render
+    var delta = event.delta;
+    var timeMultipler = delta/standardDelta;
+    // If i'm 200 fps then timer goes down every 1/200s.
+    // If i'm 60 fps then timer goes down every 1/60s. 
+    // So I want the timer to roughly be calibrated so the timer goes down faster,
+    // So the time is takes is roughly the same. 
+    timer -= timeMultipler;
+    timerText.content = (timer).toString().substring(0,3),
     progressBar.size = [(canvasWidth) * (timer/currentTimeAmount), 50]
     progressBar.opacity = (timer/currentTimeAmount);
-    console.log(progressBar.opacity);
-    if (timer === 0) {
+    if (timer <= 0) {
         if (correctAnswers.length === 0) {
             onCorrectAnswer();
         } else {
