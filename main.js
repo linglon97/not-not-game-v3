@@ -70,7 +70,7 @@ if (persistedHighScoreAllTime) {
     highScore = persistedHighScoreAllTime;
 }
 
-var progressBar = new Shape.Rectangle(new Point(0, 50), [paper.view.size.width, 50]);
+var progressBar = new Shape.Rectangle(new Point(0, 50), [paper.view.size.width - 50, 50]);
 progressBar.fillColor = 'white';
 
 // Configuration/variables 
