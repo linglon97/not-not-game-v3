@@ -73,7 +73,7 @@ progressBar.fillColor = 'white';
 var score = 0;
 var scoreCanHaveOr = 10;
 var scoreCanHaveNothing = 7;
-var initialTimeAmount = 500;
+var initialTimeAmount = 400;
 var currentTimeAmount = initialTimeAmount;
 var gameOver = false;
 var timer = initialTimeAmount;
@@ -175,7 +175,7 @@ function onIncorrectAnswer() {
 }
 
 function onCorrectAnswer() {
-    if (currentTimeAmount > 150) {
+    if (currentTimeAmount > 100) {
         currentTimeAmount -= 10;
     }
     score += 1;
