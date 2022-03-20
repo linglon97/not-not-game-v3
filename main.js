@@ -198,7 +198,7 @@ function generateWords(canHaveOr, canHaveNothing) {
         // Draw the not
         notText = new PointText({
             fillColor: 'white',
-            point:[canvasWidth/2 - 350, canvasHeight/2 - 150],
+            point:[canvasWidth/2 - 450, canvasHeight/2 - 150],
             opacity: 1, 
             content: 'NOT',
             fontSize: 75
@@ -208,7 +208,7 @@ function generateWords(canHaveOr, canHaveNothing) {
         // Draw the not
         anotherNotText = new PointText({
             fillColor: 'white',
-            point:[canvasWidth/2 - 150, canvasHeight/2 - 150],
+            point:[canvasWidth/2 - 250, canvasHeight/2 - 150],
             opacity: 1,
             content: 'NOT',
             fontSize: 75
@@ -221,7 +221,7 @@ function generateWords(canHaveOr, canHaveNothing) {
     if (useNothing) {
         nothingText = new PointText({
             fillColor: 'white',
-            point:[canvasWidth/2 + 50, canvasHeight/2 - 150],
+            point:[canvasWidth/2 - 50, canvasHeight/2 - 150],
             opacity: 1,
             content: 'NOTHING',
             fontSize: 75
@@ -235,7 +235,7 @@ function generateWords(canHaveOr, canHaveNothing) {
         directionOrColor = getRandomElementFromArray(colors)
         colorText = new PointText({
             fillColor: 'white',
-            point:[canvasWidth/2 + 150, canvasHeight/2 - 150],
+            point:[canvasWidth/2 + 50, canvasHeight/2 - 150],
             opacity: 1,
             content: directionOrColor.toUpperCase(),
             fontSize: 75
@@ -244,7 +244,7 @@ function generateWords(canHaveOr, canHaveNothing) {
         directionOrColor = getRandomElementFromArray(directions)
         directionsText = new PointText({
             fillColor: 'white',
-            point:[canvasWidth/2 + 150, canvasHeight/2 - 150],
+            point:[canvasWidth/2 + 50, canvasHeight/2 - 150],
             opacity: 1,
             content: directionOrColor.toUpperCase(),
             fontSize: 75
