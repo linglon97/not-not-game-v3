@@ -189,13 +189,7 @@ function onKeyDown(event){
 function handleKeyDown(key) {
     // Start up game again. 
     if (gameOver) {
-        score = 0;
-        scoreText.content = 'Score: ' + score.toString(),
-        gameOverTextEl.remove();
-        showArrowKeys(true);
-        generateWords();
-        resetTimer();
-        gameOver = false;
+        startGameAfterGameOver();
         return;
     }
     var arrowObjectByInputKey = {'up': upPress, 'down': downPress, 'left': leftPress, 'right': rightPress};
@@ -233,6 +227,13 @@ function onIncorrectAnswer() {
     endMusic.play();
     lastAnswer = "";
     gameOver = true;
+    
+    if (isMobile()) {
+        canvas.addEventListener('click', function handler(event) {
+            startGameAfterGameOver();
+            event.currentTarget.removeEventListener(event.type, handler);
+        });
+    }
 }
 
 function onCorrectAnswer() {
@@ -247,8 +248,18 @@ function onCorrectAnswer() {
     resetTimer();
 }
 
+function startGameAfterGameOver() {
+    score = 0;
+    scoreText.content = 'Score: ' + score.toString(),
+    gameOverTextEl.remove();
+    showArrowKeys(true);
+    generateWords();
+    resetTimer();
+    gameOver = false;
+}
+
 function showGameOverText(score) {
-    var gameOverText = 'Game Over!\n Your score was: ' + score.toString() + '.\n\n Press any key \nto play again.';
+    var gameOverText = 'Game Over!\n Your score was: ' + score.toString() + (isMobile() ? '.\n\n Tap to play again.' :'.\n\n Press any key \nto play again.');
     var fontToUse = smallAnswerFontSize;
     gameOverTextEl = new PointText({
         point: paper.view.center + [0, -250],
