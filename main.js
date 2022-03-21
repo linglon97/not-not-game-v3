@@ -9,15 +9,30 @@ var endMusic = new Howl({
     volume: 0.5,
 });
 
+function isMobile() {
+    var toMatch = [
+        /Android/i,
+        /webOS/i,
+        /iPhone/i,
+        /iPad/i,
+        /iPod/i,
+        /BlackBerry/i,
+        /Windows Phone/i
+    ];
+    
+    return toMatch.some((toMatchItem) => {
+        return navigator.userAgent.match(toMatchItem);
+    });
+}
+
 // Draw the arrow keys
 var canvas = document.getElementById('myCanvas');
 var canvasWidth = canvas.width;
 var canvasHeight = canvas.height;
-var isMobile = window.innerWidth < 600; //resolves true/false
 
 // Make the arrow keys bigger on mobile
-var keySize = isMobile ? 75 : 50;
-var extraKeyOffset = isMobile ? 100 : 0;
+var keySize = isMobile() ? 75 : 50;
+var extraKeyOffset = isMobile() ? 100 : 0;
 
 // We use the borders bounds to position elements inside.
 var border = new Shape.Rectangle(new Point(Math.floor(20), Math.floor(20)), new Size(view.size.width-40,view.size.height-40));
@@ -271,7 +286,6 @@ function generateWords() {
 function setAnswerTextEl(answerText) {
     var isSmallScreen = canvas.width < 600;
     var fontToUse = isSmallScreen ? smallAnswerFontSize : answerFontSize;
-    var answerTextXOffset = answerText.length % 2 === 0 ? 0 : fontToUse/2;
     answerTextEl = new PointText({
         point: paper.view.center + [-(answerText.length/2)*fontToUse/2- 25, -200],
         fillColor: 'white',
