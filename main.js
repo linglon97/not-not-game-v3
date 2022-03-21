@@ -13,10 +13,11 @@ var endMusic = new Howl({
 var canvas = document.getElementById('myCanvas');
 var canvasWidth = canvas.width;
 var canvasHeight = canvas.height;
+var isMobile = navigator.userAgentData.mobile; //resolves true/false
 
-var isSmallScreenWidth = canvasWidth < 600;
 // Make the arrow keys bigger on small screens, i.e. mobile for easier clicking.  
-var keySize = isSmallScreenWidth ? 65 : 50;
+var keySize = 75;
+var extraKeyOffset = isMobile ? 100 : 0;
 
 // We use the borders bounds to position elements inside.
 var border = new Shape.Rectangle(new Point(Math.floor(20), Math.floor(20)), new Size(view.size.width-40,view.size.height-40));
@@ -26,7 +27,7 @@ border.strokeWidth = '3';
 var centerX = border.size.width/2;
 var centerY = border.size.height/2;
 
-var upPress = new Path.RegularPolygon(new Point(paper.view.center.x, border.size.height-350), 3, keySize)
+var upPress = new Path.RegularPolygon(new Point(paper.view.center.x, border.size.height-350-extraKeyOffset), 3, keySize)
 upPress.strokeWidth = 5;
 
 upPress.opacity = 1;
@@ -45,7 +46,7 @@ downPress.onMouseDown = function(event) {
     handleKeyDown('down');
 }
 
-var leftPress= new Path.RegularPolygon(new Point(paper.view.center.x - 200, border.size.height-225), 3, keySize)
+var leftPress= new Path.RegularPolygon(new Point(paper.view.center.x - 200, border.size.height-225-extraKeyOffset), 3, keySize)
 leftPress.strokeWidth = 5;
 
 leftPress.opacity = 1; 
@@ -55,7 +56,7 @@ leftPress.onMouseDown = function(event) {
     handleKeyDown('left');
 }
 
-var rightPress= new Path.RegularPolygon(new Point(paper.view.center.x + 200, border.size.height-225), 3, keySize)
+var rightPress= new Path.RegularPolygon(new Point(paper.view.center.x + 200, border.size.height-225-extraKeyOffset), 3, keySize)
 rightPress.strokeWidth = 5;
 
 rightPress.opacity = 1;
@@ -76,7 +77,6 @@ if (persistedHighScoreAllTime) {
 var progressBar = new Shape.Rectangle(new Point(50, 50), new Point(paper.view.size.width - 50, 100));
 progressBar.fillColor = 'white';
 
-console.log(progressBar.from);
 // Configuration/variables 
 var scoreCanHaveOr = 30;
 var scoreCanHaveNothing = 20;
