@@ -15,8 +15,8 @@ var canvasWidth = canvas.width;
 var canvasHeight = canvas.height;
 var isMobile = navigator.userAgentData.mobile; //resolves true/false
 
-// Make the arrow keys bigger on small screens, i.e. mobile for easier clicking.  
-var keySize = 75;
+// Make the arrow keys bigger on mobile
+var keySize = isMobile ? 75 : 50;
 var extraKeyOffset = isMobile ? 100 : 0;
 
 // We use the borders bounds to position elements inside.
