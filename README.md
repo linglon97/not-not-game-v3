@@ -11,6 +11,7 @@ Backlog:
 - mobile compatibility
 - centering/combining of text in center of screen
 - menu screens/game over
+- feedback for when you get something correct (other than sound)
 - difficulty levels
 - different game mechanics
   - anything
