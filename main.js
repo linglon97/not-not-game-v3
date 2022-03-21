@@ -229,6 +229,7 @@ function onIncorrectAnswer() {
     clearWords();
     showGameOverText(score);
     showArrowKeys(false);
+    progressBar.remove();
     endMusic.play();
     lastAnswer = "";
     gameOver = true;
