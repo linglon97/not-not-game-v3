@@ -26,8 +26,16 @@ a {
     color: white;
     position: absolute;
 }
+br {
+    display: none;
+}
+@media (max-width:1750px) {
+    br {
+        display: block;
+    }
+}
 
-@media (max-width:1199px) {
+@media (max-width:1330px) {
     a {
         display: none;
     }
