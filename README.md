@@ -14,6 +14,8 @@ Backlog:
   - more nots
   - arrows at the same time (and)
   - maybe not just arrows/colors, add shape as well? i.e. instead of arrows
+  - maybe lives instead of just straight up dying?
+  - maybe you gain a life if you get a streak of 50 or something...
 - more stuff instead of just (color or direction)
 - sharing
 - mute option
