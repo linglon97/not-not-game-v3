@@ -13,7 +13,7 @@ var endMusic = new Howl({
 var canvas = document.getElementById('myCanvas');
 var canvasWidth = canvas.width;
 var canvasHeight = canvas.height;
-var isMobile = navigator.userAgentData.mobile; //resolves true/false
+var isMobile = window.innerWidth < 600; //resolves true/false
 
 // Make the arrow keys bigger on mobile
 var keySize = isMobile ? 75 : 50;
@@ -46,7 +46,7 @@ downPress.onMouseDown = function(event) {
     handleKeyDown('down');
 }
 
-var leftPress= new Path.RegularPolygon(new Point(paper.view.center.x - 200, border.size.height-225-extraKeyOffset), 3, keySize)
+var leftPress= new Path.RegularPolygon(new Point(paper.view.center.x - 200, border.size.height-225-(extraKeyOffset ? extraKeyOffset - 50 : 0)), 3, keySize)
 leftPress.strokeWidth = 5;
 
 leftPress.opacity = 1; 
@@ -56,7 +56,7 @@ leftPress.onMouseDown = function(event) {
     handleKeyDown('left');
 }
 
-var rightPress= new Path.RegularPolygon(new Point(paper.view.center.x + 200, border.size.height-225-extraKeyOffset), 3, keySize)
+var rightPress= new Path.RegularPolygon(new Point(paper.view.center.x + 200, border.size.height-225-(extraKeyOffset ? extraKeyOffset - 50 : 0)), 3, keySize)
 rightPress.strokeWidth = 5;
 
 rightPress.opacity = 1;
@@ -85,7 +85,7 @@ var scoreCanHaveColors = 6;
 
 var initialTimeAmount = 450;
 var answerFontSize = 70;
-var smallAnswerFontSize = 75/1.5;
+var smallAnswerFontSize = 75/1.3;
 
 // Global variables for game state, objects, etc.
 var score = 0;
