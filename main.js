@@ -9,7 +9,13 @@ var endMusic = new Howl({
     volume: 0.5,
 });
 
+// We use the borders bounds to position elements inside, so define it early. 
+var border = new Shape.Rectangle(new Point(Math.floor(20), Math.floor(20)), new Size(view.size.width-40,view.size.height-40));
+border.strokeColor = 'white';
+border.strokeWidth = '3';
+
 function isMobile() {
+    return false;
     var toMatch = [
         /Android/i,
         /webOS/i,
@@ -32,29 +38,34 @@ var canvasWidth = canvas.width;
 var canvasHeight = canvas.height;
 
 // Make the arrow keys bigger on mobile
-var keySize = isMobile() ? 75 : 50;
-var extraKeyOffset = isMobile() ? 100 : 0;
+var mobileKeySize = 125;
+var keySize = 50;
+var extraKeyOffset = 150;
+var upPress, downPress, leftPress, rightPress;
 
-// We use the borders bounds to position elements inside.
-var border = new Shape.Rectangle(new Point(Math.floor(20), Math.floor(20)), new Size(view.size.width-40,view.size.height-40));
-border.strokeColor = 'white';
-border.strokeWidth = '3';
+if (isMobile) {    
+    upPress = new Path.RegularPolygon(new Point(paper.view.center.x, border.size.height-550), 3, mobileKeySize);
+    downPress = new Path.RegularPolygon(new Point(paper.view.center.x, border.size.height-100), 3, mobileKeySize);
+    leftPress= new Path.RegularPolygon(new Point(paper.view.center.x - 260, border.size.height-325), 3, mobileKeySize);
+    rightPress= new Path.RegularPolygon(new Point(paper.view.center.x + 260, border.size.height-325), 3, mobileKeySize);
+} else {
+    upPress = new Path.RegularPolygon(new Point(paper.view.center.x, border.size.height-350), 3, keySize);
+    downPress = new Path.RegularPolygon(new Point(paper.view.center.x, border.size.height-100), 3, keySize);
+    leftPress= new Path.RegularPolygon(new Point(paper.view.center.x - 200  , border.size.height-225), 3, keySize);
+    rightPress= new Path.RegularPolygon(new Point(paper.view.center.x + 200, border.size.height-225), 3, keySize);
+}
 
 var centerX = border.size.width/2;
 var centerY = border.size.height/2;
 
-var upPress = new Path.RegularPolygon(new Point(paper.view.center.x, border.size.height-350-extraKeyOffset), 3, keySize)
 upPress.strokeWidth = 5;
-
 upPress.opacity = 1;
 upPress.fillColor = 'red';
 upPress.onMouseDown = function(event) {
     handleKeyDown('up');
 }
 
-var downPress = new Path.RegularPolygon(new Point(paper.view.center.x, border.size.height-100), 3, keySize)
 downPress.strokeWidth = 5;
-
 downPress.opacity = 1;
 downPress.rotate(180);
 downPress.fillColor = 'blue';
@@ -62,9 +73,8 @@ downPress.onMouseDown = function(event) {
     handleKeyDown('down');
 }
 
-var leftPress= new Path.RegularPolygon(new Point(paper.view.center.x - 200 - (isMobile ? 25 : 0) , border.size.height-225-(extraKeyOffset ? extraKeyOffset - 50 : 0)), 3, keySize)
-leftPress.strokeWidth = 5;
 
+leftPress.strokeWidth = 5;
 leftPress.opacity = 1; 
 leftPress.rotate(270);
 leftPress.fillColor = 'green'
@@ -72,9 +82,7 @@ leftPress.onMouseDown = function(event) {
     handleKeyDown('left');
 }
 
-var rightPress= new Path.RegularPolygon(new Point(paper.view.center.x + 200 + (isMobile ? 25 : 0), border.size.height-225-(extraKeyOffset ? extraKeyOffset - 50 : 0)), 3, keySize)
 rightPress.strokeWidth = 5;
-
 rightPress.opacity = 1;
 rightPress.rotate(90);
 rightPress.fillColor = 'yellow';
