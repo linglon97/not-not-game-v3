@@ -252,6 +252,7 @@ function startGameAfterGameOver() {
     score = 0;
     scoreText.content = 'Score: ' + score.toString(),
     gameOverTextEl.remove();
+    clearWords();
     showArrowKeys(true);
     generateWords();
     resetTimer();
@@ -272,6 +273,7 @@ function showGameOverText(score) {
 }
 
 function generateWords() {
+    clearWords();
     var canHaveNothing = score > scoreCanHaveNothing;
     var canHaveColors = score > scoreCanHaveColors;
     var canHaveOr = score > scoreCanHaveOr;
