@@ -107,6 +107,7 @@ var scoreCanHaveColors = 6;
 var initialTimeAmount = 450;
 var answerFontSize = 70;
 var smallAnswerFontSize = 75/1.3;
+var lastAnswer = "";
 
 // Global variables for game state, objects, etc.
 var score = 0;
@@ -211,6 +212,7 @@ function onIncorrectAnswer() {
     score = 0;
     scoreText.content = 'Score: ' + score.toString(),
     endMusic.play();
+    lastAnswer = "";
     clearWords();
     generateWords();
     resetTimer();
@@ -258,6 +260,11 @@ function generateWords() {
     // I guess "anything" takes precedence over nothing here.
     if (useAnything) {
         combinedAnswerText += "anything";
+        if (lastAnswer === combinedAnswerText) {
+            console.log(lastAnswer, 'duplicate!');
+            generateWords();
+            return;
+        }
         // TODO(ling): refactor to do this in shared fn. 
         setAnswerTextEl(combinedAnswerText);
         correctAnswers = finalUseNot ? [] : directions;
@@ -266,6 +273,11 @@ function generateWords() {
 
     if (useNothing) {
         combinedAnswerText += "nothing";
+        if (lastAnswer === combinedAnswerText) {
+            console.log(lastAnswer, 'duplicate!');
+            generateWords();
+            return;
+        }
         setAnswerTextEl(combinedAnswerText);
         setCorrectAnswers(finalUseNot, useColor, directionOrColor, true, directionOrColor);
         return;
@@ -285,6 +297,11 @@ function generateWords() {
     } else {
         combinedAnswerText += directionOrColor;
     }
+    if (lastAnswer === combinedAnswerText) {
+        // Generate again with the hopes that we don't repeat. 
+        generateWords();
+        return;
+    }
     setAnswerTextEl(combinedAnswerText);
     setCorrectAnswers(finalUseNot, useColor, directionOrColor, false, secondDirectionOrColor);
 }
@@ -299,6 +316,7 @@ function setAnswerTextEl(answerText) {
         fontSize: isSmallScreen ? smallAnswerFontSize : answerFontSize,
         fontFamily: 'Roboto mono',
     });    
+    lastAnswer = answerText;
 }
 
 function setCorrectAnswers(useNot, useColor, directionOrColor, useNothing, secondDirectionOrColor) {
