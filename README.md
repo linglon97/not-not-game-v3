@@ -1,5 +1,9 @@
 # not-not-game-v3
 not not game v3!
+Made with: 
+- paperJS
+- howlerJS
+
 
 Play the game at https://notnot.site
 
