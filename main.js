@@ -279,11 +279,11 @@ function generateWords() {
 
     // Generates the words that determine which keys can be pressed. 
     // TODO(ling): refactor these values into config files or something. 
-    var useNot = generateRandomBooleanWithProbability(score > 5 ? 0.37 : 0);
-    var useAnotherNot = generateRandomBooleanWithProbability(canHaveMultipleNots ? 0.37 : 0);
+    var useNot = true;
+    var useAnotherNot = true;
     var useColor = generateRandomBooleanWithProbability(canHaveColors ? 0.5 : 0);
     var useNothing = generateRandomBooleanWithProbability(canHaveNothing ? 0.09 : 0);
-    var useOr = generateRandomBooleanWithProbability(canHaveOr ? 0.3 : 0);
+    var useOr = true;
     var useAnything = generateRandomBooleanWithProbability(canHaveNothing ? 0.06 : 0);
 
     var combinedAnswerText = "";
@@ -322,10 +322,6 @@ function generateWords() {
         return;
     } 
 
-    if (useOr) {
-        combinedAnswerText += '\n';
-    }
-
     var directionOrColor;
     if (useColor) {
         directionOrColor = getRandomElementFromArray(colors)
@@ -355,12 +351,13 @@ function showArrowKeys(shouldShowArrowKeys) {
 }
 
 function setAnswerTextEl(answerText) {
+    var fontScale = answerText.length > 20 ? 0.8 : 1;
     var fontToUse = isSmallScreen ? smallAnswerFontSize : answerFontSize;
     answerTextEl = new PointText({
         point: paper.view.center - [0, 200],
         fillColor: 'white',
         content: answerText,
-        fontSize: isSmallScreen ? smallAnswerFontSize : answerFontSize,
+        fontSize: fontToUse*fontScale,
         fontFamily: 'Roboto mono',
         justification: 'center',
     });    
