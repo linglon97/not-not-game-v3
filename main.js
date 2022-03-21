@@ -15,7 +15,6 @@ border.strokeColor = 'white';
 border.strokeWidth = '3';
 
 function isMobile() {
-    return false;
     var toMatch = [
         /Android/i,
         /webOS/i,
@@ -31,7 +30,6 @@ function isMobile() {
     });
 }
 
-console.log(isMobile(), navigator.userAgent);
 // Draw the arrow keys
 var canvas = document.getElementById('myCanvas');
 var canvasWidth = canvas.width;
