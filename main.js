@@ -34,6 +34,7 @@ function isMobile() {
 var canvas = document.getElementById('myCanvas');
 var canvasWidth = canvas.width;
 var canvasHeight = canvas.height;
+var isSmallScreen = canvas.width < 600;
 
 // Make the arrow keys bigger on mobile
 var mobileKeySize = 125;
@@ -104,7 +105,7 @@ var scoreCanHaveNothing = 20;
 var scoreCanHaveMultipleNots = 10;
 var scoreCanHaveColors = 6;
 
-var initialTimeAmount = 450;
+var initialTimeAmount = 500;
 var answerFontSize = 70;
 var smallAnswerFontSize = 75/1.3;
 var lastAnswer = "";
@@ -115,10 +116,12 @@ var currentTimeAmount = initialTimeAmount;
 var gameOver = false;
 var timer = initialTimeAmount;
 var answerTextEl;
+var gameOverTextEl;
 
 var correctAnswers = [];
 var colors = ['red', 'green', 'blue', 'yellow'];
 var directions = ['up', 'down', 'left', 'right'];
+var arrowKeys = [upPress, downPress, leftPress, rightPress];
 
 // Text that depends on game variables
 
@@ -143,6 +146,9 @@ var highScoreText = new PointText({
 generateWords();
 
 function onFrame(event){
+    if (gameOver) {
+        return;
+    }
     var standardDelta = 1/200;
     // Time in seconds since last frame render
     var delta = event.delta;
@@ -181,6 +187,17 @@ function onKeyDown(event){
 }
 
 function handleKeyDown(key) {
+    // Start up game again. 
+    if (gameOver) {
+        score = 0;
+        scoreText.content = 'Score: ' + score.toString(),
+        gameOverTextEl.remove();
+        showArrowKeys(true);
+        generateWords();
+        resetTimer();
+        gameOver = false;
+        return;
+    }
     var arrowObjectByInputKey = {'up': upPress, 'down': downPress, 'left': leftPress, 'right': rightPress};
     var inputsWeCareAbout = ['w','a','s','d','up','down','left','right'];
     var wasdToArrowKeys = {
@@ -209,18 +226,17 @@ function onIncorrectAnswer() {
         highScoreText.content = 'Highscore: ' + highScore.toString();
     }
     currentTimeAmount = initialTimeAmount;
-    score = 0;
-    scoreText.content = 'Score: ' + score.toString(),
+    clearWords();
+    showGameOverText(score);
+    showArrowKeys(false);
     endMusic.play();
     lastAnswer = "";
-    clearWords();
-    generateWords();
-    resetTimer();
+    gameOver = true;
 }
 
 function onCorrectAnswer() {
-    if (currentTimeAmount > 120) {
-        currentTimeAmount -= 4;
+    if (currentTimeAmount > 180) {
+        currentTimeAmount -= 5;
     }
     score += 1;
     scoreText.content = 'Score: ' + score.toString(),
@@ -228,6 +244,19 @@ function onCorrectAnswer() {
     clearWords();
     generateWords();
     resetTimer();
+}
+
+function showGameOverText(score) {
+    var gameOverText = 'Game Over!\n Your score was: ' + score.toString() + '.\n\n Press any key \nto play again.';
+    var fontToUse = smallAnswerFontSize;
+    gameOverTextEl = new PointText({
+        point: paper.view.center + [0, -250],
+        fillColor: 'white',
+        content: gameOverText,
+        fontSize: fontToUse,
+        fontFamily: 'Roboto mono',
+        justification: 'center',
+    });    
 }
 
 function generateWords() {
@@ -304,8 +333,13 @@ function generateWords() {
     setCorrectAnswers(finalUseNot, useColor, directionOrColor, false, secondDirectionOrColor);
 }
 
+function showArrowKeys(shouldShowArrowKeys) {
+    for (var i = 0; i < arrowKeys.length; i++) {
+        arrowKeys[i].opacity = shouldShowArrowKeys ? 1 : 0;
+    }
+}
+
 function setAnswerTextEl(answerText) {
-    var isSmallScreen = canvas.width < 600;
     var fontToUse = isSmallScreen ? smallAnswerFontSize : answerFontSize;
     answerTextEl = new PointText({
         point: paper.view.center + [-(answerText.length/2)*fontToUse/2- 25, -200],
