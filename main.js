@@ -279,7 +279,7 @@ function generateWords() {
 
     // Generates the words that determine which keys can be pressed. 
     // TODO(ling): refactor these values into config files or something. 
-    var useNot = generateRandomBooleanWithProbability(1);
+    var useNot = generateRandomBooleanWithProbability(score > 3 ? 0.35 : 0);
     var useAnotherNot = generateRandomBooleanWithProbability(canHaveMultipleNots ? 0.35 : 0);
     var useColor = generateRandomBooleanWithProbability(canHaveColors ? 0.5 : 0);
     var useNothing = generateRandomBooleanWithProbability(canHaveNothing ? 0.09 : 0);
