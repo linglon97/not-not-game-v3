@@ -37,7 +37,7 @@ var canvasHeight = canvas.height;
 
 // Make the arrow keys bigger on mobile
 var mobileKeySize = 125;
-var keySize = 60;
+var keySize = 50;
 var extraKeyOffset = 150;
 var upPress, downPress, leftPress, rightPress;
 
@@ -261,7 +261,6 @@ function generateWords() {
     if (useAnything) {
         combinedAnswerText += "anything";
         if (lastAnswer === combinedAnswerText) {
-            console.log(lastAnswer, 'duplicate!');
             generateWords();
             return;
         }
@@ -274,7 +273,6 @@ function generateWords() {
     if (useNothing) {
         combinedAnswerText += "nothing";
         if (lastAnswer === combinedAnswerText) {
-            console.log(lastAnswer, 'duplicate!');
             generateWords();
             return;
         }
