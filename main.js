@@ -1,7 +1,7 @@
 //music
 var correctMusic = new Howl({
     src:['sounds/pinwheel.mp3'],
-    volume: 0.5,
+    volume: 0.3,
 });
 
 var endMusic = new Howl({
