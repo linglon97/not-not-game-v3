@@ -10,22 +10,22 @@ var endMusic = new Howl({
 });
 
 function isMobile() {
-    // var toMatch = [
-    //     /Android/i,
-    //     /webOS/i,
-    //     /iPhone/i,
-    //     /iPad/i,
-    //     /iPod/i,
-    //     /BlackBerry/i,
-    //     /Windows Phone/i
-    // ];
+    var toMatch = [
+        /Android/i,
+        /webOS/i,
+        /iPhone/i,
+        /iPad/i,
+        /iPod/i,
+        /BlackBerry/i,
+        /Windows Phone/i
+    ];
     
-    // return toMatch.some((toMatchItem) => {
-    //     return navigator.userAgent.match(toMatchItem);
-    // });
-    return true;
+    return toMatch.some(function (toMatchItem) {
+        return navigator.userAgent.match(toMatchItem);
+    });
 }
 
+console.log(isMobile(), navigator.userAgent);
 // Draw the arrow keys
 var canvas = document.getElementById('myCanvas');
 var canvasWidth = canvas.width;
