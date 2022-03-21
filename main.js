@@ -30,6 +30,8 @@ function isMobile() {
     });
 }
 
+console.log(isMobile());
+
 // Draw the arrow keys
 var canvas = document.getElementById('myCanvas');
 var canvasWidth = canvas.width;
@@ -37,11 +39,11 @@ var canvasHeight = canvas.height;
 
 // Make the arrow keys bigger on mobile
 var mobileKeySize = 125;
-var keySize = 50;
+var keySize = 60;
 var extraKeyOffset = 150;
 var upPress, downPress, leftPress, rightPress;
 
-if (isMobile) {    
+if (isMobile()) {    
     upPress = new Path.RegularPolygon(new Point(paper.view.center.x, border.size.height-550), 3, mobileKeySize);
     downPress = new Path.RegularPolygon(new Point(paper.view.center.x, border.size.height-100), 3, mobileKeySize);
     leftPress= new Path.RegularPolygon(new Point(paper.view.center.x - 260, border.size.height-325), 3, mobileKeySize);
@@ -70,7 +72,6 @@ downPress.fillColor = 'blue';
 downPress.onMouseDown = function(event) {
     handleKeyDown('down');
 }
-
 
 leftPress.strokeWidth = 5;
 leftPress.opacity = 1; 
