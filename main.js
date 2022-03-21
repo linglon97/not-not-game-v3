@@ -30,8 +30,6 @@ function isMobile() {
     });
 }
 
-console.log(isMobile());
-
 // Draw the arrow keys
 var canvas = document.getElementById('myCanvas');
 var canvasWidth = canvas.width;
