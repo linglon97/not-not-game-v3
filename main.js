@@ -10,19 +10,20 @@ var endMusic = new Howl({
 });
 
 function isMobile() {
-    var toMatch = [
-        /Android/i,
-        /webOS/i,
-        /iPhone/i,
-        /iPad/i,
-        /iPod/i,
-        /BlackBerry/i,
-        /Windows Phone/i
-    ];
+    // var toMatch = [
+    //     /Android/i,
+    //     /webOS/i,
+    //     /iPhone/i,
+    //     /iPad/i,
+    //     /iPod/i,
+    //     /BlackBerry/i,
+    //     /Windows Phone/i
+    // ];
     
-    return toMatch.some((toMatchItem) => {
-        return navigator.userAgent.match(toMatchItem);
-    });
+    // return toMatch.some((toMatchItem) => {
+    //     return navigator.userAgent.match(toMatchItem);
+    // });
+    return true;
 }
 
 // Draw the arrow keys
@@ -61,7 +62,7 @@ downPress.onMouseDown = function(event) {
     handleKeyDown('down');
 }
 
-var leftPress= new Path.RegularPolygon(new Point(paper.view.center.x - 200, border.size.height-225-(extraKeyOffset ? extraKeyOffset - 50 : 0)), 3, keySize)
+var leftPress= new Path.RegularPolygon(new Point(paper.view.center.x - 200 - (isMobile ? 25 : 0) , border.size.height-225-(extraKeyOffset ? extraKeyOffset - 50 : 0)), 3, keySize)
 leftPress.strokeWidth = 5;
 
 leftPress.opacity = 1; 
@@ -71,7 +72,7 @@ leftPress.onMouseDown = function(event) {
     handleKeyDown('left');
 }
 
-var rightPress= new Path.RegularPolygon(new Point(paper.view.center.x + 200, border.size.height-225-(extraKeyOffset ? extraKeyOffset - 50 : 0)), 3, keySize)
+var rightPress= new Path.RegularPolygon(new Point(paper.view.center.x + 200 + (isMobile ? 25 : 0), border.size.height-225-(extraKeyOffset ? extraKeyOffset - 50 : 0)), 3, keySize)
 rightPress.strokeWidth = 5;
 
 rightPress.opacity = 1;
